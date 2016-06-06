@@ -39,6 +39,7 @@ public class MainActivity extends RxActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fresco.initialize(this);
+        //
         initView() ;
     }
 
