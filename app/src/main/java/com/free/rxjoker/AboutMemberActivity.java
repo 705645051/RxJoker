@@ -49,7 +49,7 @@ public class AboutMemberActivity extends RxActivity {
         memberInfoBean.setJobName("Android开发工程师");
         memberInfoBean.setName("Liyaxing");
         memberInfoBean.setSex(true);
-        memberInfoBean.setIcon("https://github.com/stven0king/stven0king.github.io/blob/master/uploads/user.jpg");
+        memberInfoBean.setIcon("http://imgbdb3.bendibao.com/tjbdb/201512/7/2015127164129145.jpg");
         list.add(memberInfoBean);
     }
 
@@ -84,14 +84,16 @@ public class AboutMemberActivity extends RxActivity {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             MemberInfoBean model = list.get(position);
-            holder.age.setText(model.getAge() + "");
+            holder.age.setText(model.getAge() + "岁");
             if (!TextUtils.isEmpty(model.getName())) {
                 holder.name.setText(model.getName() + ",");
             }
             holder.icon.setImageURI(Uri.parse(model.getIcon()));
             if (model.isSex()) {
                 holder.sex.setText("男");
+                holder.sex.setBackgroundResource(R.drawable.i_member_list_item_sex_man_bg);
             } else {
+                holder.sex.setBackgroundResource(R.drawable.i_member_list_item_sex_woman_bg);
                 holder.sex.setText("女");
             }
             holder.jobName.setText("工作岗位：" + model.getJobName());
