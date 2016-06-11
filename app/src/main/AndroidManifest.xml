@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".AboutMeActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".AboutMemberActivity"
+                  android:screenOrientation="portrait"/>
 
     </application>
 

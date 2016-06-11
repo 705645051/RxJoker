@@ -81,9 +81,14 @@ public class MainActivity extends RxActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = null;
         switch (item.getItemId()) {
             case R.id.menu_about_app:
-                Intent intent = new Intent(this,AboutMeActivity.class) ;
+                intent = new Intent(this,AboutMeActivity.class) ;
+                startActivity(intent);
+                break;
+            case R.id.menu_about_members:
+                intent = new Intent(this, AboutMemberActivity.class);
                 startActivity(intent);
                 break;
         }
