@@ -7,8 +7,6 @@
     android:layout_height="wrap_content"
     android:foreground="?android:attr/selectableItemBackground"
     android:orientation="vertical"
-    android:layout_marginRight="8dp"
-    android:layout_marginLeft="8dp"
     app:cardCornerRadius="2dp"
     app:cardElevation="2dp">
     <LinearLayout
@@ -38,6 +36,7 @@
                 fresco:actualImageScaleType="focusCrop"
                 fresco:failureImage="@drawable/default_header_icon"
                 fresco:failureImageScaleType="focusCrop"
+                android:layout_marginRight="8dp"
                 fresco:placeholderImage="@drawable/default_header_icon" />
             <TextView
                 android:id="@+id/user_name"
@@ -52,6 +51,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/user_name"
                 android:layout_toRightOf="@id/user_name"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:text="24岁"/>
             <TextView
                 android:id="@+id/user_sex"

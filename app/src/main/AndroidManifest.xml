@@ -21,8 +21,9 @@
         <activity android:name=".AboutMeActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".AboutMemberActivity"
-                  android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MemberDetailActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.free.rxjoker;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import rx.subscriptions.CompositeSubscription;
  * Created by liyaxing on 2016/6/4.
  */
 public abstract class RxActivity extends AppCompatActivity {
+    public Context mContext;
 
     private CompositeSubscription mCompositeSubscription;
 
@@ -34,6 +36,7 @@ public abstract class RxActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         ButterKnife.bind(this);
+        mContext = this;
     }
 
     protected abstract int getLayoutId() ;

@@ -1,6 +1,8 @@
 package com.free.rxjoker;
 
 import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Telephony;
@@ -45,11 +47,18 @@ public class AboutMemberActivity extends RxActivity {
 
     private void initVaule() {
         MemberInfoBean memberInfoBean = new MemberInfoBean();
-        memberInfoBean.setAge(12);
+        memberInfoBean.setAge(24);
         memberInfoBean.setJobName("Android开发工程师");
-        memberInfoBean.setName("Liyaxing");
+        memberInfoBean.setName("谭振兴");
         memberInfoBean.setSex(true);
-        memberInfoBean.setIcon("http://imgbdb3.bendibao.com/tjbdb/201512/7/2015127164129145.jpg");
+        memberInfoBean.setIcon("http://i4.buimg.com/a0f481fdaf692028t.jpg");
+        MemberInfoBean memberInfoBean1 = new MemberInfoBean();
+        memberInfoBean1.setAge(25);
+        memberInfoBean1.setJobName("Android开发工程师");
+        memberInfoBean1.setName("李亚星");
+        memberInfoBean1.setSex(true);
+        memberInfoBean1.setIcon("http://i1.buimg.com/833bf5d29e809e7ft.jpg");
+        list.add(memberInfoBean1);
         list.add(memberInfoBean);
     }
 
@@ -65,6 +74,16 @@ public class AboutMemberActivity extends RxActivity {
         recyclerView.addItemDecoration(
                 new RecycleViewDivider(this, LinearLayoutManager.VERTICAL,10, Color.TRANSPARENT));
         recyclerView.setAdapter(adapter = new MyAdapter());
+        adapter.setOnClickItemListener(new OnItemClickListener());
+    }
+
+    class OnItemClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            int postion = (int) view.getTag();
+            MemberDetailActivity.goMemberDetailActivity(mContext, list.get(postion));
+        }
     }
 
     @Override
@@ -74,7 +93,7 @@ public class AboutMemberActivity extends RxActivity {
 
 
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-
+        private View.OnClickListener onClickItemListener;
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             return new ViewHolder(
@@ -97,6 +116,14 @@ public class AboutMemberActivity extends RxActivity {
                 holder.sex.setText("女");
             }
             holder.jobName.setText("工作岗位：" + model.getJobName());
+            holder.rootView.setTag(position);
+            if (onClickItemListener != null) {
+                holder.rootView.setOnClickListener(onClickItemListener);
+            }
+        }
+
+        public void setOnClickItemListener(View.OnClickListener onClickItemListener) {
+            this.onClickItemListener = onClickItemListener;
         }
 
         @Override
@@ -111,7 +138,7 @@ public class AboutMemberActivity extends RxActivity {
             @Nullable @Bind(R.id.user_sex) TextView sex;
             @Nullable @Bind(R.id.user_age) TextView age;
             @Nullable @Bind(R.id.user_job) TextView jobName;
-
+            @Nullable @Bind(R.id.list_item_header_root_view) ViewGroup rootView;
 
             public ViewHolder(View itemView) {
                 super(itemView);

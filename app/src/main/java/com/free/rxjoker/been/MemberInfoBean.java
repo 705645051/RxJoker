@@ -1,11 +1,13 @@
 package com.free.rxjoker.been;
 
+import java.io.Serializable;
+
 /**
  * Created by tanzhenxing
  * Date: 2016/6/11.
  * Description:参与成员信息
  */
-public class MemberInfoBean  {
+public class MemberInfoBean implements Serializable {
     private String icon;
     private String name;
     private String companyName;
