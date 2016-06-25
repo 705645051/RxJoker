@@ -1,6 +1,7 @@
 package com.free.rxjoker.model;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -32,13 +33,7 @@ public class RetrofitApiFactory {
         /*
          * 初始化OkHttpClient
          */
-        okHttpClient =
-                new OkHttpClient.Builder()
-                        .readTimeout(TIME_OUT, TimeUnit.SECONDS)
-                        .writeTimeout(TIME_OUT, TimeUnit.SECONDS)
-                        .addInterceptor(LogInterceptor.INSTANCE)
-                        .build();
-
+        initOkHttpClient();
     }
 
     public static <T> T createApi(Class<T> clz){
@@ -64,6 +59,7 @@ public class RetrofitApiFactory {
                 .client(okHttpClient)
                 .baseUrl(baseUrl)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(StringResponseConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -74,6 +70,17 @@ public class RetrofitApiFactory {
 
     public static void clearCacheMap(){
         cacheMap.clear();
+    }
+
+    public static void initOkHttpClient(){
+        Log.d("RetrofitApiFactory","--initOkHttpClient--") ;
+        okHttpClient =
+                new OkHttpClient.Builder()
+                        .readTimeout(TIME_OUT, TimeUnit.SECONDS)
+                        .writeTimeout(TIME_OUT, TimeUnit.SECONDS)
+                        .addInterceptor(MainInterceptor.INSTANCE)
+                        .build();
+        clearCacheMap();
     }
 
 }
