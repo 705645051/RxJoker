@@ -1,16 +1,20 @@
 package com.free.rxjoker;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -18,8 +22,10 @@ import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.free.rxjoker.been.GifBeen;
 import com.free.rxjoker.model.Config;
+import com.free.rxjoker.model.Host;
 import com.free.rxjoker.model.JokerApi;
 import com.free.rxjoker.model.RetrofitApiFactory;
+import com.free.rxjoker.utils.DensityUtil;
 import com.jakewharton.rxbinding.support.v4.widget.RxSwipeRefreshLayout;
 
 import java.util.ArrayList;
@@ -53,8 +59,11 @@ public class GifFragment extends RxFragment {
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(manager);
         recyclerView.addItemDecoration(
-                new RecycleViewDivider(getActivity(), LinearLayoutManager.VERTICAL,10, Color.BLACK));
-        recyclerView.setAdapter(adapter = new MyAdapter());
+                new RecycleViewDivider(getActivity(),
+                        LinearLayoutManager.VERTICAL,
+                        DensityUtil.dip2px(getActivity(), 10),
+                        getResources().getColor(R.color.whitesmoke)));
+        recyclerView.setAdapter(adapter = new MyAdapter(getActivity()));
         RxSwipeRefreshLayout.refreshes(swipeRefreshLayout)
                 .observeOn(Schedulers.io())
                 .flatMap(this :: getListForObservable)
@@ -88,6 +97,11 @@ public class GifFragment extends RxFragment {
     }
 
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+        private Context mContext;
+
+        public MyAdapter(Context context) {
+            mContext = context;
+        }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -105,6 +119,13 @@ public class GifFragment extends RxFragment {
                             .setAutoPlayAnimations(true) // 设置加载图片完成后是否直接进行播放
                             .build();
             holder.simpleDraweeView.setController(draweeController);
+            holder.simpleDraweeView.setOnClickListener(v -> new PreViewImgFragment(model, ((RxActivity)mContext).getSupportFragmentManager()));
+            if (!TextUtils.isEmpty(model.content)) {
+                holder.gitContextTV.setVisibility(View.VISIBLE);
+                holder.gitContextTV.setText(model.content);
+            } else {
+                holder.gitContextTV.setVisibility(View.GONE);
+            }
         }
 
         @Override
@@ -115,7 +136,7 @@ public class GifFragment extends RxFragment {
         class ViewHolder extends BaseViewHolder {
 
             @Nullable @Bind(R.id.simple_drawee_view) SimpleDraweeView simpleDraweeView;
-
+            @Nullable @Bind(R.id.gif_content) TextView gitContextTV;
             public ViewHolder(View itemView) {
                 super(itemView);
             }

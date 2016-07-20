@@ -16,7 +16,7 @@ import rx.subscriptions.CompositeSubscription;
  * Created by liyaxing on 2016/6/4.
  */
 public abstract class RxFragment extends Fragment {
-
+    public String TAG;
     protected abstract int getContentViewId();
     protected Context context;
     protected View mRootView;

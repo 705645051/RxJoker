@@ -52,6 +52,8 @@ public class MemberDetailActivity extends RxActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(android.R.drawable.ic_input_delete);
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+
     }
 
     private void initValue() {

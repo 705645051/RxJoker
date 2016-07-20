@@ -11,10 +11,13 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.free.rxjoker.been.GifBeen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +41,6 @@ public class MainActivity extends RxActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fresco.initialize(this);
-        //
         initView() ;
     }
 
@@ -84,8 +85,14 @@ public class MainActivity extends RxActivity {
         Intent intent = null;
         switch (item.getItemId()) {
             case R.id.menu_about_app:
-                intent = new Intent(this,AboutMeActivity.class) ;
-                startActivity(intent);
+                //intent = new Intent(this,AboutMeActivity.class) ;
+                //startActivity(intent);
+                GifBeen gifBeen = new GifBeen();
+                gifBeen.content = "知乎上的神回复，教你如何正确地吐槽！";
+                gifBeen.hashId = "hashId=B62284FB59CAA4F9E023BAAD6CCB258E";
+                gifBeen.url = "http://juheimg.oss-cn-hangzhou.aliyuncs.com/joke/201606/30/B62284FB59CAA4F9E023BAAD6CCB258E.png";
+                new PreViewImgFragment(gifBeen, MainActivity.this.getSupportFragmentManager());
+                //new BottomPopView(MainActivity.this.getSupportFragmentManager());
                 break;
             case R.id.menu_about_members:
                 intent = new Intent(this, AboutMemberActivity.class);
@@ -117,5 +124,14 @@ public class MainActivity extends RxActivity {
             return TAB_ITEMS[position];
         }
     }
+
+    //@Override
+    //public boolean onKeyDown(int keyCode, KeyEvent event) {
+    //    Log.d("onKeyDown", "onKeyDown: ");
+    //    if(keyCode == KeyEvent.KEYCODE_BACK) { //监控/拦截/屏蔽返回键
+    //        return false;
+    //    }
+    //    return super.onKeyDown(keyCode, event);
+    //}
 
 }
